@@ -1,0 +1,193 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Disparador de Webhooks - PlugBoleto",
+    "version": "1.0.0",
+    "description": "API para reprocessamento e gestão de webhooks"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Login do cliente",
+        "tags": ["Autenticação"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cnpj": { "type": "string" },
+                  "senha": { "type": "string" }
+                },
+                "required": ["cnpj", "senha"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token JWT retornado"
+          }
+        }
+      }
+    },
+    "/notifications": {
+      "get": {
+        "summary": "Lista notificações com filtros",
+        "tags": ["Notificações"],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": { "type": "string", "format": "date" },
+            "description": "Data de início"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "schema": { "type": "string", "format": "date" },
+            "description": "Data de fim"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de notificações"
+          }
+        }
+      }
+    },
+    "/reprocess/webhook": {
+      "post": {
+        "summary": "Reprocessa via Webhook",
+        "tags": ["Reprocessamento"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Protocolo gerado para reprocessamento"
+          }
+        }
+      }
+    },
+    "/protocols": {
+      "get": {
+        "summary": "Lista protocolos",
+        "tags": ["Protocolos"],
+        "responses": {
+          "200": {
+            "description": "Lista de protocolos"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "tags": ["Infraestrutura"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/reprocessar/email-agendado": {
+      "post": {
+        "summary": "Reprocessa notificações por e-mail agendado",
+        "tags": ["Reprocessamento"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "clienteId": {
+                    "type": "string",
+                    "description": "Identificador do cliente"
+                  },
+                  "dataAgendamento": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data e hora para agendamento"
+                  }
+                },
+                "required": ["clienteId", "dataAgendamento"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reprocessamento agendado iniciado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          }
+        }
+      }
+    },
+    "/reprocessar/evento": {
+      "post": {
+        "summary": "Reprocessa notificações por evento",
+        "tags": ["Reprocessamento"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "clienteId": {
+                    "type": "string",
+                    "description": "Identificador do cliente"
+                  },
+                  "evento": {
+                    "type": "string",
+                    "description": "Tipo do evento para reprocessamento"
+                  }
+                },
+                "required": ["clienteId", "evento"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reprocessamento por evento iniciado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    { "name": "Autenticação" },
+    { "name": "Notificações" },
+    { "name": "Reprocessamento" },
+    { "name": "Protocolos" },
+    { "name": "Infraestrutura" }
+  ]
+}
