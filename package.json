@@ -7,14 +7,18 @@
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "swagger-ui-express": "^4.6.3"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
-    "@types/node": "^22.15.21",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.15.24",
     "@types/swagger-ui-express": "^4.1.8",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
