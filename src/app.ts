@@ -1,13 +1,12 @@
 import express from "express";
 import { setupSwagger } from "./swagger";
-
+import routes from './routes';  
 const app = express();
-const apiRoutes = require('./routes/apiRoutes');
 
 app.use(express.json());
 setupSwagger(app);
 
-app.use('/api', apiRoutes);
+app.use('/api', routes);
 
 app.listen(3000, () => {
   console.log("Servidor rodando em http://localhost:3000");

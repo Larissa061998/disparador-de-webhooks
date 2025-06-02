@@ -111,7 +111,7 @@
         }
       }
     },
-    "/reprocessar/email-agendado": {
+    "/reprocess/email-agendado": {
       "post": {
         "summary": "Reprocessa notificações por e-mail agendado",
         "tags": ["Reprocessamento"],
@@ -147,7 +147,7 @@
         }
       }
     },
-    "/reprocessar/evento": {
+    "/reprocess/evento": {
       "post": {
         "summary": "Reprocessa notificações por evento",
         "tags": ["Reprocessamento"],
